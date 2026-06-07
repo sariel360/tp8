@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Álbum Web — TP6 · Sistema de Fixtures TP8</title>
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    /* ══ OVERLAY — abre sobre animado ══ */
+    .ov { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:24px; }
+    .ov.show { display:flex; }
+    .ov-titulo { font-family:'Bangers',cursive; font-size:1.6rem; color:var(--dorado); letter-spacing:3px; }
+    .ov-sobre { font-size:6rem; cursor:pointer; animation:bounceSobre 0.5s ease; transition:transform 0.2s; }
+    .ov-sobre:hover { transform:scale(1.12); }
+    @keyframes bounceSobre { from{transform:scale(0.2);opacity:0;} 70%{transform:scale(1.18);} to{transform:scale(1);opacity:1;} }
+    .ov-msg { color:var(--gris); font-size:0.9rem; letter-spacing:2px; }
+    .ov-cards { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; max-width:700px; }
+    .mini-card { background:var(--azul-card); border:2px solid rgba(245,197,24,0.2); border-radius:10px; width:110px; overflow:hidden; animation:caer 0.4s ease forwards; opacity:0; }
+    .mini-card.leg-card { border-color:var(--dorado); box-shadow:0 0 14px rgba(245,197,24,0.35); }
+    .mini-card.nue-card { border-color:var(--rojo); }
+    @keyframes caer { from{transform:translateY(-24px) scale(0.8);opacity:0;} to{transform:translateY(0) scale(1);opacity:1;} }
+    .mc-img-wrap { width:100%; height:80px; overflow:hidden; background:linear-gradient(180deg,#1a3a8f,#0a1e5e); display:flex; align-items:center; justify-content:center; }
+    .mc-img { width:100%; height:100%; object-fit:cover; object-position:top center; }
+    .mc-ph  { font-size:2.4rem; }
+    .mc-info { padding:8px; }
+    .mc-nombre { font-family:'Bangers',cursive; font-size:0.85rem; letter-spacing:1px; color:var(--blanco); margin-bottom:4px; }
+    .mc-tag { display:inline-block; font-size:0.6rem; font-weight:800; padding:2px 6px; border-radius:4px; letter-spacing:1px; }
+    .mc-ya  { font-size:0.65rem; color:var(--gris); margin-top:4px; }
+    .ov-btns { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+    .btn-ov-pegar   { font-family:'Bangers',cursive; font-size:1.1rem; letter-spacing:2px; padding:12px 28px; background:var(--dorado); color:var(--azul); border:none; border-radius:10px; cursor:pointer; transition:background 0.2s; }
+    .btn-ov-pegar:hover { background:#ffe047; }
+    .btn-ov-guardar { font-family:'Nunito',sans-serif; font-size:0.9rem; font-weight:800; padding:12px 20px; background:transparent; color:var(--gris); border:1px solid rgba(143,160,184,0.3); border-radius:10px; cursor:pointer; transition:all 0.2s; }
+    .btn-ov-guardar:hover { color:var(--blanco); border-color:rgba(143,160,184,0.6); }
+    .pts-display { text-align:center; padding:12px; background:rgba(245,197,24,0.08); border:1px solid rgba(245,197,24,0.2); border-radius:10px; margin-bottom:16px; }
+    .pts-num { font-family:'Bangers',cursive; font-size:2.4rem; color:var(--dorado); display:block; }
+    .pts-lbl { font-size:0.7rem; color:var(--gris); letter-spacing:2px; text-transform:uppercase; }
+    .album-slot { background:var(--azul-card); border:2px solid rgba(143,160,184,0.12); border-radius:12px; overflow:hidden; transition:all 0.2s; position:relative; }
+    .album-slot.pegada { border-color:rgba(245,197,24,0.3); }
+    .album-slot.pegada.leg { border-color:var(--dorado); box-shadow:0 0 16px rgba(245,197,24,0.25); }
+    .album-slot:hover { transform:translateY(-4px); }
+    .slot-num { position:absolute; top:6px; left:8px; font-family:'Bangers',cursive; font-size:0.78rem; color:var(--gris); letter-spacing:1px; }
+    .slot-img-wrap { width:100%; height:110px; overflow:hidden; background:linear-gradient(180deg,#1a3a8f,#0a1e5e); display:flex; align-items:center; justify-content:center; }
+    .slot-img-wrap.gold { background:linear-gradient(180deg,#5c3a00,#b8860b); }
+    .slot-img { width:100%; height:100%; object-fit:cover; object-position:top center; }
+    .slot-ph { font-size:3rem; }
+    .slot-body { padding:10px; }
+    .slot-nombre { font-family:'Bangers',cursive; font-size:0.95rem; letter-spacing:1px; color:var(--blanco); margin-bottom:2px; }
+    .slot-pos { font-size:0.7rem; color:var(--gris); margin-bottom:6px; }
+    .slot-tags {}
+    .tag { display:inline-block; font-size:0.6rem; font-weight:800; padding:2px 6px; border-radius:4px; letter-spacing:1px; }
+    .tag-l { background:rgba(245,197,24,0.15); color:var(--dorado); border:1px solid rgba(245,197,24,0.3); }
+    .tag-r { background:rgba(46,204,113,0.12); color:var(--verde); border:1px solid rgba(46,204,113,0.25); }
+    .tag-n { background:rgba(231,76,60,0.12); color:var(--rojo); border:1px solid rgba(231,76,60,0.25); }
+    .ficha-header { display:flex; gap:18px; align-items:flex-start; margin-bottom:18px; }
+    .ficha-avatar-grande { font-size:4rem; width:80px; text-align:center; }
+    .ficha-titulo { font-family:'Bangers',cursive; font-size:1.6rem; letter-spacing:2px; color:var(--blanco); margin-bottom:4px; }
+    .ficha-sub { font-size:0.85rem; color:var(--gris); }
+    .ficha-cols { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .col-vacia { text-align:center; padding:40px 20px; color:var(--gris); font-size:0.9rem; line-height:1.8; }
+    .col-item { display:flex; align-items:center; gap:12px; padding:10px 14px; background:rgba(10,22,40,0.4); border:1px solid rgba(143,160,184,0.1); border-radius:10px; margin-bottom:8px; }
+    .col-av { width:44px; height:44px; border-radius:50%; object-fit:cover; object-position:top; background:var(--azul-medio); }
+    .col-av-ph { width:44px; height:44px; border-radius:50%; background:var(--azul-medio); display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
+    .col-info { flex:1; }
+    .col-nombre { font-weight:800; font-size:0.9rem; color:var(--blanco); }
+    .col-detalle { font-size:0.75rem; color:var(--gris); margin-top:2px; }
+    .badge-dup { font-family:'Bangers',cursive; font-size:0.85rem; color:var(--azul); background:var(--dorado); padding:2px 8px; border-radius:20px; }
+    .badge-pegada { font-size:0.75rem; font-weight:800; color:var(--verde); padding:4px 10px; background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.25); border-radius:6px; }
+    .btn-pegar-ind { font-family:'Bangers',cursive; font-size:0.9rem; letter-spacing:1px; padding:6px 14px; background:var(--dorado); color:var(--azul); border:none; border-radius:6px; cursor:pointer; transition:background 0.2s; }
+    .btn-pegar-ind:hover { background:#ffe047; }
+    .ind-dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--verde); margin-right:6px; flex-shrink:0; }
+    .ind-dot.falta { background:rgba(143,160,184,0.3); }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER semántico ═══════════════════════════════ -->
+<header>
+  <h1>Mi Álbum Web de Coleccionables</h1>
+  <p>Laboratorio de Programación &middot; 6° G &middot; 2026</p>
+</header>
+
+<!-- ══ NAV — integrado con sistema TP8 ══════════════ -->
+<nav>
+  <a href="index.html" class="activo" id="nav-album">⭐ Álbum</a>
+  <a href="#" id="nav-sobres" onclick="cambiarVista('sobres',this); return false;">📦 Sobres</a>
+  <a href="#" id="nav-coleccion" onclick="cambiarVista('coleccion',this); return false;">🗂️ Colección</a>
+  <a href="registro.html">📝 Registro</a>
+  <a href="index-tp8.html">🏆 Fixtures</a>
+</nav>
+
+<!-- ══ CONTENIDO PRINCIPAL ════════════════════════════ -->
+<div id="contenido-principal">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div id="seccion-sobres">
+      <h2>📦 Mis Sobres</h2>
+      <div class="pts-display">
+        <span class="pts-num" id="pts-display">100</span>
+        <div class="pts-lbl">PUNTOS DISPONIBLES</div>
+      </div>
+      <div class="sobre-item" onclick="abrirSobre('basico')">
+        <span class="sobre-icono">📦</span>
+        <div class="sobre-info"><div class="sobre-nombre">Básico</div><div class="sobre-cantidad">3 figuritas · 10 pts</div></div>
+      </div>
+      <div class="sobre-item" onclick="abrirSobre('premium')">
+        <span class="sobre-icono">💎</span>
+        <div class="sobre-info"><div class="sobre-nombre">Premium</div><div class="sobre-cantidad">5 fig. + 1 rara · 25 pts</div></div>
+      </div>
+      <div class="sobre-item" onclick="abrirSobre('elite')">
+        <span class="sobre-icono">⭐</span>
+        <div class="sobre-info"><div class="sobre-nombre">Élite</div><div class="sobre-cantidad">7 fig. + legendaria · 40 pts</div></div>
+      </div>
+      <div class="sobre-item" onclick="abrirSobre('legend')">
+        <span class="sobre-icono">🌟</span>
+        <div class="sobre-info"><div class="sobre-nombre">Legendario</div><div class="sobre-cantidad">3 legendarias · 60 pts</div></div>
+      </div>
+      <a href="#" class="btn-pegar" onclick="abrirSobre('basico'); return false;">⭐ ¡Pegar Figurita!</a>
+    </div>
+    <div id="seccion-indice">
+      <h2>📋 Índice</h2>
+      <ol id="indice-figuritas"></ol>
+    </div>
+  </div>
+
+  <!-- ZONA PRINCIPAL -->
+  <div id="zona-principal">
+
+    <!-- VISTA ÁLBUM -->
+    <div id="vista-album">
+      <h2 class="seccion-titulo">⭐ Cuadrícula de Figuritas</h2>
+      <p class="seccion-subtitulo" id="subtitulo-album">Selección Argentina · 0 de 22 pegadas</p>
+      <div id="cuadricula-figuritas"></div>
+      <div id="progreso-album">
+        <h3>📊 Progreso del Álbum</h3>
+        <div class="barra-progreso-wrap">
+          <div class="barra-progreso-fill" id="barra-fill" style="width:0%;">0%</div>
+        </div>
+        <p class="progreso-texto" id="progreso-texto">0 de 22 figuritas pegadas</p>
+      </div>
+    </div>
+
+    <!-- VISTA SOBRES -->
+    <div id="vista-sobres" style="display:none;">
+      <h2 class="seccion-titulo">📦 Abrir Sobres</h2>
+      <p class="seccion-subtitulo">Elegí un tipo de sobre para abrir y conseguir figuritas.</p>
+      <div id="ficha-destacado" style="margin-bottom:24px;">
+        <div class="ficha-header">
+          <div class="ficha-avatar-grande" id="ficha-av">📦</div>
+          <div>
+            <div class="ficha-titulo" id="ficha-nombre-jugador">Seleccioná un sobre</div>
+            <div class="ficha-sub">Hacé click en uno de los sobres del panel izquierdo para abrirlo.</div>
+          </div>
+        </div>
+        <div class="ficha-cols">
+          <dl class="ficha-tecnica">
+            <dt>Tipo</dt><dd id="fd-tipo">—</dd>
+            <dt>Figuritas</dt><dd id="fd-cant">—</dd>
+            <dt>Costo</dt><dd id="fd-costo">—</dd>
+            <dt>Rareza incluida</dt><dd id="fd-rareza">—</dd>
+          </dl>
+          <div>
+            <p style="font-family:'Bangers',cursive;font-size:0.95rem;letter-spacing:2px;color:var(--gris);margin-bottom:10px;">CONTENIDO</p>
+            <ul class="habilidades-lista" id="fd-habilidades">
+              <li>Figuritas al azar de toda la selección</li>
+              <li>Mayor rareza = más puntos de colección</li>
+              <li>Las duplicadas van a "Colección en mano"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA COLECCIÓN -->
+    <div id="vista-coleccion" style="display:none;">
+      <h2 class="seccion-titulo">🗂️ Colección en Mano</h2>
+      <p class="seccion-subtitulo">Figuritas que todavía no pegaste. Podés pegarlas una a una.</p>
+      <div id="col-lista"><div class="col-vacia">No tenés figuritas en mano.<br>¡Abrí un sobre para empezar!</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>TP6 · Mi Álbum Web de Coleccionables · Laboratorio de Programación 6° G · 2026</p>
+</footer>
+
+<!-- OVERLAY -->
+<div class="ov" id="overlay">
+  <div class="ov-titulo" id="ov-titulo">Sobre Básico</div>
+  <div class="ov-sobre" id="ov-sobre" onclick="revelarFiguritas()">📦</div>
+  <div class="ov-msg"   id="ov-msg">¡Tocá el sobre para abrirlo!</div>
+  <div class="ov-cards" id="ov-cards" style="display:none;"></div>
+  <div class="ov-btns"  id="ov-btns"  style="display:none;">
+    <button class="btn-ov-pegar"   onclick="pegarTodas()">⭐ ¡Pegar Figuritas!</button>
+    <button class="btn-ov-guardar" onclick="guardarYCerrar()">Guardar para después</button>
+  </div>
+</div>
+
+<script>
+const WM = "https://upload.wikimedia.org/wikipedia/commons/";
+const JUGADORES = [
+  {id:1,  num:"01", nombre:"Lionel Messi",      pos:"Delantero · 10",    equipo:"Inter Miami",    tag:"legendaria", habs:["Regate de élite","Visión de juego","Tiro libre preciso","Liderazgo"], img:WM+"thumb/b/b8/Lionel_Messi_WC2022.jpg/220px-Lionel_Messi_WC2022.jpg"},
+  {id:2,  num:"23", nombre:"E. Martínez",        pos:"Arquero · 23",      equipo:"Aston Villa",    tag:"legendaria", habs:["Reflejos de élite","Penales campeón","Liderazgo"], img:WM+"thumb/e/e5/Emiliano_Mart%C3%ADnez_%282023%29.jpg/220px-Emiliano_Mart%C3%ADnez_%282023%29.jpg"},
+  {id:3,  num:"03", nombre:"Nico González",      pos:"Delantero · 11",    equipo:"Atletico Madrid",tag:"normal",     habs:["Velocidad","Desequilibrio","Trabajo defensivo"], img:WM+"thumb/5/56/Nicol%C3%A1s_Gonz%C3%A1lez_2022.jpg/220px-Nicol%C3%A1s_Gonz%C3%A1lez_2022.jpg"},
+  {id:4,  num:"04", nombre:"Julián Álvarez",     pos:"Delantero · 9",     equipo:"Atletico Madrid",tag:"rara",       habs:["Definición","Presión alta","Gol en torneos grandes"], img:WM+"thumb/e/e9/Juli%C3%A1n_%C3%81lvarez_2022_%28cropped%29.jpg/220px-Juli%C3%A1n_%C3%81lvarez_2022_%28cropped%29.jpg"},
+  {id:5,  num:"05", nombre:"Lautaro Martínez",   pos:"Delantero · 22",    equipo:"Inter Milan",    tag:"rara",       habs:["Potencia","Juego de espaldas","Gol en áreas chicas"], img:WM+"thumb/5/5c/ARGENTINA_VS_VENEZUELA_Lautaro_%28cropped%29.jpg/220px-ARGENTINA_VS_VENEZUELA_Lautaro_%28cropped%29.jpg"},
+  {id:6,  num:"06", nombre:"Enzo Fernández",     pos:"Mediocampista · 8", equipo:"Chelsea",        tag:"rara",       habs:["Control del juego","Pase largo","Llegada al área"], img:WM+"thumb/5/55/Argentina_vs_mexico_enzofernandez.jpg/170px-Argentina_vs_mexico_enzofernandez.jpg"},
+  {id:7,  num:"07", nombre:"Mac Allister",       pos:"Mediocampista · 20",equipo:"Liverpool",      tag:"rara",       habs:["Distribución","Récupero","Gol de media distancia"], img:WM+"thumb/c/c3/Alexis_Mac_Allister_2022.jpg/220px-Alexis_Mac_Allister_2022.jpg"},
+  {id:8,  num:"08", nombre:"Rodrigo De Paul",    pos:"Mediocampista · 7", equipo:"Inter Miami",    tag:"normal",     habs:["Intensidad","Desplazamiento","Liderazgo"], img:WM+"thumb/3/3a/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Rodrigo_de_Paul_-_240422_192702_%28cropped%29.jpg/220px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Rodrigo_de_Paul_-_240422_192702_%28cropped%29.jpg"},
+  {id:9,  num:"09", nombre:"Nicolás Otamendi",   pos:"Defensor · 19",     equipo:"Benfica",        tag:"legendaria", habs:["Marca central","Juego aéreo","Liderazgo defensivo"], img:WM+"thumb/0/04/Nicolas_Otamendi_2018.jpg/220px-Nicolas_Otamendi_2018.jpg"},
+  {id:10, num:"10", nombre:"Nahuel Molina",      pos:"Defensor · 26",     equipo:"Atletico Madrid",tag:"nueva",      habs:["Velocidad lateral","Centros precisos","Gol desde afuera"], img:WM+"thumb/8/80/Nahuel_Molina_2022.jpg/220px-Nahuel_Molina_2022.jpg"},
+  {id:11, num:"11", nombre:"Cristian Romero",    pos:"Defensor · 13",     equipo:"Tottenham",      tag:"normal",     habs:["Duelos aéreos","Marca agresiva","Recuperación"], img:WM+"thumb/6/68/Cuti_Romero_2022.jpg/220px-Cuti_Romero_2022.jpg"},
+  {id:12, num:"12", nombre:"N. Tagliafico",      pos:"Defensor · 3",      equipo:"Olympique Lyon", tag:"normal",     habs:["Subida por banda","Defensa 1vs1","Pase filtrado"], img:WM+"thumb/a/a9/Nicol%C3%A1s_Tagliafico_2018.jpg/220px-Nicol%C3%A1s_Tagliafico_2018.jpg"},
+  {id:13, num:"13", nombre:"Leandro Paredes",    pos:"Mediocampista · 5", equipo:"Boca Juniors",   tag:"normal",     habs:["Corte de juego","Distribución simple","Pase largo"], img:WM+"thumb/c/cb/Leandro_Paredes_2022.jpg/220px-Leandro_Paredes_2022.jpg"},
+  {id:14, num:"14", nombre:"G. Simeone",         pos:"Delantero · 18",    equipo:"Atletico Madrid",tag:"nueva",      habs:["Intensidad","Presión alta","Definición"], img:WM+"thumb/7/72/Giuliano_Simeone_2024.jpg/220px-Giuliano_Simeone_2024.jpg"},
+  {id:15, num:"15", nombre:"L. Balerdi",         pos:"Defensor · 4",      equipo:"Marseille",      tag:"normal",     habs:["Salida limpia","Marca central","Físico"], img:WM+"thumb/d/d8/Leonardo_Balerdi_2023.jpg/220px-Leonardo_Balerdi_2023.jpg"},
+  {id:16, num:"16", nombre:"E. Palacios",        pos:"Mediocampista · 14",equipo:"B. Leverkusen",  tag:"normal",     habs:["Llegada","Técnica depurada","Disparo"], img:WM+"thumb/9/91/Exequiel_Palacios_%282022%29.jpg/220px-Exequiel_Palacios_%282022%29.jpg"},
+  {id:17, num:"17", nombre:"Nico Paz",           pos:"Mediocampista · 16",equipo:"Como",           tag:"nueva",      habs:["Desequilibrio","Jugada individual","Pase filtrado"], img:WM+"thumb/6/64/Nico_Paz_2024.jpg/220px-Nico_Paz_2024.jpg"},
+  {id:18, num:"18", nombre:"G. Lo Celso",        pos:"Mediocampista · 6", equipo:"Villarreal",     tag:"normal",     habs:["Toque corto","Recupero","Asistencias"], img:WM+"thumb/a/a2/Giovanni_Lo_Celso_2022.jpg/220px-Giovanni_Lo_Celso_2022.jpg"},
+  {id:19, num:"19", nombre:"Thiago Almada",      pos:"Mediocampista · 17",equipo:"Lyon",           tag:"nueva",      habs:["Regate","Velocidad","Técnica individual"], img:WM+"thumb/7/70/Thiago_Almada_2024.jpg/220px-Thiago_Almada_2024.jpg"},
+  {id:20, num:"20", nombre:"L. Martínez",        pos:"Defensor · 25",     equipo:"Man. United",    tag:"rara",       habs:["Concentración","Marca 1vs1","Blocaje"], img:WM+"thumb/6/67/Lisandro_Martinez_2022.jpg/220px-Lisandro_Martinez_2022.jpg"},
+  {id:21, num:"21", nombre:"F. Mastantuono",     pos:"Mediocampista · 21",equipo:"Real Madrid",    tag:"nueva",      habs:["Técnica fina","Visión","Gol joven"], img:WM+"thumb/5/55/Franco_Mastantuono_2024.jpg/220px-Franco_Mastantuono_2024.jpg"},
+  {id:22, num:"22", nombre:"Gonzalo Montiel",    pos:"Defensor · 2",      equipo:"Nottm Forest",   tag:"normal",     habs:["Marcación lateral","Subida","Penal campeón"], img:WM+"thumb/f/f5/Gonzalo_Montiel_2022.jpg/220px-Gonzalo_Montiel_2022.jpg"},
+];
+const SOBRES = {
+  basico:  {costo:10, cant:3, icono:"📦", titulo:"Sobre Básico",    pool:["normal","normal","rara"],                                       rareza:"Normal + 1 Rara"},
+  premium: {costo:25, cant:5, icono:"💎", titulo:"Sobre Premium",   pool:["normal","normal","normal","rara","rara"],                       rareza:"Normal + 2 Raras"},
+  elite:   {costo:40, cant:7, icono:"⭐", titulo:"Sobre Élite",     pool:["normal","normal","rara","rara","rara","legendaria","legendaria"],rareza:"Raras + posible Legendaria"},
+  legend:  {costo:60, cant:3, icono:"🌟", titulo:"Sobre Legendario",pool:["legendaria","legendaria","legendaria"],                         rareza:"3 Legendarias garantizadas"},
+};
+let puntos=100, pegadas=new Set(), coleccion={}, pendientes=[];
+function porRareza(r){ if(r==="legendaria") return JUGADORES.filter(j=>j.tag==="legendaria"); if(r==="rara") return JUGADORES.filter(j=>j.tag==="rara"||j.tag==="legendaria"); return JUGADORES; }
+function tagHTML(tag,cls="tag"){ if(tag==="legendaria") return `<span class="${cls} tag-l">LEGENDARIA</span>`; if(tag==="rara") return `<span class="${cls} tag-r">RARA</span>`; if(tag==="nueva") return `<span class="${cls} tag-n">NUEVA</span>`; return ""; }
+function actualizarStats(){ const p=pegadas.size,tot=JUGADORES.length,pct=Math.round(p/tot*100); document.getElementById("pts-display").textContent=puntos; document.getElementById("barra-fill").style.width=pct+"%"; document.getElementById("barra-fill").textContent=pct+"%"; document.getElementById("progreso-texto").textContent=p+" de "+tot+" figuritas pegadas"+(p===tot?" · ¡Álbum completo! 🎉":" · ¡Te "+(tot-p===1?"falta 1":"faltan "+(tot-p))+"!"); document.getElementById("subtitulo-album").textContent="Selección Argentina · "+p+" de "+tot+" pegadas"; }
+function renderIndice(){ const ol=document.getElementById("indice-figuritas"); ol.innerHTML=""; JUGADORES.forEach(j=>{ const li=document.createElement("li"); const dot=document.createElement("span"); dot.className="ind-dot"+(pegadas.has(j.id)?"":" falta"); li.appendChild(dot); li.appendChild(document.createTextNode(j.nombre)); ol.appendChild(li); }); }
+function renderAlbum(){ const grid=document.getElementById("cuadricula-figuritas"); grid.innerHTML=""; JUGADORES.forEach(j=>{ const ok=pegadas.has(j.id),leg=j.tag==="legendaria"; const card=document.createElement("div"); card.className="album-slot"+(ok?" pegada"+(leg?" leg":""):""); const num=document.createElement("span"); num.className="slot-num"; num.textContent="#"+j.num; card.appendChild(num); const wrap=document.createElement("div"); wrap.className="slot-img-wrap"+(leg?" gold":""); if(ok){ const img=document.createElement("img"); img.src=j.img; img.className="slot-img"; img.onerror=function(){ const ph=document.createElement("div"); ph.className="slot-ph"; ph.textContent="⚽"; this.parentNode&&this.parentNode.replaceChild(ph,this); }; wrap.appendChild(img); } else { const ph=document.createElement("div"); ph.className="slot-ph"; ph.textContent="❓"; wrap.appendChild(ph); } card.appendChild(wrap); const body=document.createElement("div"); body.className="slot-body"; body.innerHTML=`<div class="slot-nombre">${ok?j.nombre:"???"}</div><div class="slot-pos">${ok?j.pos:"— — —"}</div><div class="slot-tags">${ok?tagHTML(j.tag):""}</div>`; card.appendChild(body); grid.appendChild(card); }); renderIndice(); actualizarStats(); }
+function abrirSobre(tipo){ const cfg=SOBRES[tipo]; if(puntos<cfg.costo){ alert("¡No tenés suficientes puntos! Necesitás "+cfg.costo+" pts."); return; } puntos-=cfg.costo; actualizarStats(); const figuritas=Array.from({length:cfg.cant},()=>{ const r=cfg.pool[Math.floor(Math.random()*cfg.pool.length)]; const pool=porRareza(r); return pool[Math.floor(Math.random()*pool.length)]; }); pendientes=figuritas; const ov=document.getElementById("overlay"); document.getElementById("ov-titulo").textContent=cfg.titulo; document.getElementById("ov-sobre").textContent=cfg.icono; document.getElementById("ov-sobre").style.display="block"; document.getElementById("ov-msg").style.display="block"; document.getElementById("ov-cards").style.display="none"; document.getElementById("ov-cards").innerHTML=""; document.getElementById("ov-btns").style.display="none"; ov.classList.add("show"); }
+function revelarFiguritas(){ document.getElementById("ov-sobre").style.display="none"; document.getElementById("ov-msg").style.display="none"; document.getElementById("ov-cards").style.display="flex"; document.getElementById("ov-btns").style.display="flex"; const cardsDiv=document.getElementById("ov-cards"); pendientes.forEach((j,i)=>{ setTimeout(()=>{ const card=document.createElement("div"); card.className="mini-card"+(j.tag==="legendaria"?" leg-card":j.tag==="nueva"?" nue-card":""); card.style.animationDelay=(i*0.12)+"s"; const wrap=document.createElement("div"); wrap.className="mc-img-wrap"; const img=document.createElement("img"); img.src=j.img; img.className="mc-img"; img.onerror=function(){ const ph=document.createElement("div"); ph.className="mc-ph"; ph.textContent="⚽"; this.parentNode&&this.parentNode.replaceChild(ph,this); }; wrap.appendChild(img); card.appendChild(wrap); const inf=document.createElement("div"); inf.className="mc-info"; const yaLa=pegadas.has(j.id); inf.innerHTML=`<div class="mc-nombre">${j.nombre}</div>${tagHTML(j.tag,"mc-tag")}${yaLa?'<div class="mc-ya">Ya la tenés ↠ mano</div>':""}`;card.appendChild(inf); cardsDiv.appendChild(card); },i*130); }); }
+function pegarTodas(){ pendientes.forEach(j=>{ if(!pegadas.has(j.id)){ pegadas.add(j.id); } else { if(!coleccion[j.id]) coleccion[j.id]={jugador:j,cantidad:0}; coleccion[j.id].cantidad++; } }); pendientes=[]; cerrarOverlay(); renderAlbum(); }
+function guardarYCerrar(){ pendientes.forEach(j=>{ if(!coleccion[j.id]) coleccion[j.id]={jugador:j,cantidad:0}; coleccion[j.id].cantidad++; }); pendientes=[]; cerrarOverlay(); }
+function cerrarOverlay(){ document.getElementById("overlay").classList.remove("show"); }
+function pegarIndividual(id){ if(!coleccion[id]||coleccion[id].cantidad<1) return; coleccion[id].cantidad--; if(coleccion[id].cantidad===0) delete coleccion[id]; pegadas.add(id); renderAlbum(); renderColeccion(); }
+function renderColeccion(){ const lista=document.getElementById("col-lista"); const items=Object.values(coleccion).filter(c=>c.cantidad>0); if(!items.length){ lista.innerHTML='<div class="col-vacia">No tenés figuritas en mano.<br>¡Abrí un sobre para empezar!</div>'; return; } lista.innerHTML=""; items.forEach(({jugador:j,cantidad})=>{ const ok=pegadas.has(j.id); const div=document.createElement("div"); div.className="col-item"; const av=document.createElement("img"); av.src=j.img; av.className="col-av"; av.onerror=function(){ const ph=document.createElement("div"); ph.className="col-av-ph"; ph.textContent="⚽"; this.parentNode&&this.parentNode.replaceChild(ph,this); }; div.appendChild(av); const inf=document.createElement("div"); inf.className="col-info"; inf.innerHTML=`<div class="col-nombre">${j.nombre}</div><div class="col-detalle">${j.pos} · ${j.equipo}</div>`; div.appendChild(inf); if(cantidad>1){ const bd=document.createElement("span"); bd.className="badge-dup"; bd.textContent="x"+cantidad; div.appendChild(bd); } if(tagHTML(j.tag)) div.insertAdjacentHTML("beforeend",tagHTML(j.tag,"tag")); if(!ok){ const btn=document.createElement("button"); btn.className="btn-pegar-ind"; btn.textContent="Pegar"; btn.onclick=()=>pegarIndividual(j.id); div.appendChild(btn); } else { const bd=document.createElement("span"); bd.className="badge-pegada"; bd.textContent="✓ Pegada"; div.appendChild(bd); } lista.appendChild(div); }); }
+function cambiarVista(nombre,linkEl){ ["album","sobres","coleccion"].forEach(v=>{ document.getElementById("vista-"+v).style.display=(v===nombre?"block":"none"); }); document.querySelectorAll("nav a").forEach(a=>a.classList.remove("activo")); if(linkEl) linkEl.classList.add("activo"); if(nombre==="coleccion") renderColeccion(); }
+renderAlbum();
+</script>
+</body>
+</html>

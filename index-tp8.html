@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Control — Sistema de Fixtures · TP8</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+  <h1>Sistema de Fixtures</h1>
+  <p>Laboratorio de Programación &middot; 6° G &middot; 2026</p>
+</header>
+
+<nav>
+  <a href="index-tp8.html" class="activo">🏠 Panel de Control</a>
+  <a href="alta-fixture.html">➕ Cargar Partido</a>
+  <a href="ver-fixture.html">📅 Ver Fixture</a>
+  <a href="registro.html">📝 Registro</a>
+  <a href="index.html">⭐ Álbum</a>
+</nav>
+
+<main>
+
+  <!-- ── Stats ── -->
+  <section>
+    <h2 class="titulo-seccion">🏆 Panel de Control del Torneo</h2>
+    <p class="subtitulo-seccion">Resumen general del torneo &middot; Temporada 2026 &middot; Liga de Programación 6° G</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-numero" id="stat-total">10</span>
+        <span class="stat-label">Partidos Programados</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-numero">8</span>
+        <span class="stat-label">Partidos Jugados</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-numero" id="stat-pend">2</span>
+        <span class="stat-label">Pendientes</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-numero">6</span>
+        <span class="stat-label">Equipos Participantes</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-numero">3</span>
+        <span class="stat-label">Sedes Habilitadas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Novedades ── -->
+  <section>
+    <h2 class="titulo-seccion">📰 Novedades del Torneo</h2>
+    <p class="subtitulo-seccion">Últimas actualizaciones y avisos institucionales</p>
+
+    <article>
+      <div class="art-meta">📅 03 de junio de 2026 &nbsp;&middot;&nbsp; Administración</div>
+      <h3>🗓️ Fixture de Semifinales Confirmado</h3>
+      <p>Se confirman los cruces de la instancia de Semifinal. Los partidos se disputarán los días 10 y 11 de junio de 2026 en el Estadio Principal del establecimiento. Recordamos a los capitanes que deben presentarse con 15 minutos de anticipación.</p>
+    </article>
+
+    <article>
+      <div class="art-meta">📅 28 de mayo de 2026 &nbsp;&middot;&nbsp; Resultados</div>
+      <h3>⚽ Cuartos de Final — Resultados</h3>
+      <p>Se completaron todos los partidos de Cuartos de Final. Los equipos clasificados a semifinales son: <strong style="color:var(--dorado)">Los Algoritmos</strong>, <strong style="color:var(--dorado)">Binary Stars</strong>, <strong style="color:var(--dorado)">Stack Overflow FC</strong> y <strong style="color:var(--dorado)">Debug United</strong>. ¡Felicitaciones a todos los participantes!</p>
+    </article>
+
+    <article>
+      <div class="art-meta">📅 15 de mayo de 2026 &nbsp;&middot;&nbsp; Reglamento</div>
+      <h3>📋 Actualización del Reglamento — Cláusula 7</h3>
+      <p>Se informa que la cláusula 7 del reglamento fue actualizada para la instancia de eliminación directa. En caso de empate al final del tiempo reglamentario, se procederá directamente a la definición por penales. No habrá tiempo extra.</p>
+    </article>
+
+    <article>
+      <div class="art-meta">📅 Próximo encuentro &nbsp;&middot;&nbsp; Semifinal</div>
+      <h3>🔜 Próximo Partido — Semifinal 1</h3>
+      <p>
+        <strong style="color:var(--dorado)">Los Algoritmos</strong>
+        <span style="color:var(--gris);margin:0 8px;">vs</span>
+        <strong style="color:var(--dorado)">Binary Stars</strong>
+        &nbsp;&middot;&nbsp; Martes 10/06/2026 a las 14:30 hs &nbsp;&middot;&nbsp; Estadio Principal
+      </p>
+    </article>
+
+    <!-- Aviso dinámico: partidos cargados desde localStorage -->
+    <article id="art-dinamico" style="display:none; border-left-color:#a78bfa;">
+      <div class="art-meta">📅 Sistema &nbsp;&middot;&nbsp; Actualizaciones</div>
+      <h3>📋 Partidos Nuevos en el Sistema</h3>
+      <p id="txt-dinamico"></p>
+    </article>
+  </section>
+
+  <!-- ── Accesos rápidos ── -->
+  <section>
+    <h2 class="titulo-seccion">⚡ Accesos Rápidos</h2>
+    <p class="subtitulo-seccion">Navegá a las secciones del sistema</p>
+    <div class="stats-grid">
+      <a href="alta-fixture.html" style="text-decoration:none;">
+        <div class="stat-card" style="cursor:pointer;">
+          <span class="stat-numero" style="font-size:2rem;">➕</span>
+          <span class="stat-label">Cargar Nuevo Partido</span>
+        </div>
+      </a>
+      <a href="ver-fixture.html" style="text-decoration:none;">
+        <div class="stat-card" style="cursor:pointer;">
+          <span class="stat-numero" style="font-size:2rem;">📅</span>
+          <span class="stat-label">Ver Fixture Completo</span>
+        </div>
+      </a>
+      <a href="registro.html" style="text-decoration:none;">
+        <div class="stat-card" style="cursor:pointer;">
+          <span class="stat-numero" style="font-size:2rem;">📝</span>
+          <span class="stat-label">Registrar Participante</span>
+        </div>
+      </a>
+      <a href="index.html" style="text-decoration:none;">
+        <div class="stat-card" style="cursor:pointer;">
+          <span class="stat-numero" style="font-size:2rem;">⭐</span>
+          <span class="stat-label">Álbum de Figuritas</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>TP8 &middot; Sistema de Fixtures &middot; Laboratorio de Programación 6° G &middot; 2026</p>
+</footer>
+
+<script>
+  /* Actualizar stats con partidos guardados en localStorage */
+  const guardados = JSON.parse(localStorage.getItem('fixtures_tp8') || '[]');
+
+  if (guardados.length > 0) {
+    const total = document.getElementById('stat-total');
+    const pend  = document.getElementById('stat-pend');
+    total.textContent = 10 + guardados.length;
+    pend.textContent  = 2  + guardados.length;
+
+    const art = document.getElementById('art-dinamico');
+    const txt = document.getElementById('txt-dinamico');
+    art.style.display = 'block';
+
+    const NOMBRES = {
+      algoritmos:'Los Algoritmos', binary:'Binary Stars',
+      stack:'Stack Overflow FC',   debug:'Debug United',
+      runtime:'Runtime Errors',    syntax:'Syntax FC'
+    };
+    const ultimos = guardados.slice(-3).reverse();
+    txt.innerHTML = 'Se registraron <strong style="color:var(--dorado)">' + guardados.length +
+      ' nuevo' + (guardados.length !== 1 ? 's' : '') + ' partido' + (guardados.length !== 1 ? 's' : '') +
+      '</strong> en el sistema. ' +
+      'Últimos registrados: ' +
+      ultimos.map(function(p) {
+        return '<strong>' + NOMBRES[p.local] + ' vs ' + NOMBRES[p.visitante] + '</strong> (' + p.fecha + ')';
+      }).join(', ') + '.';
+  }
+</script>
+
+</body>
+</html>

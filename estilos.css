@@ -1,0 +1,1185 @@
+/* =====================================================
+   TP6 — Mi Álbum Web de Coleccionables
+   Laboratorio de Programación - 6° G - 2026
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ── VARIABLES ── */
+:root {
+  --dorado:       #f5c518;
+  --dorado-claro: #fff4b2;
+  --azul:         #0a1628;
+  --azul-medio:   #132042;
+  --azul-card:    #1a2d55;
+  --verde:        #2ecc71;
+  --rojo:         #e74c3c;
+  --gris:         #8fa0b8;
+  --blanco:       #f0f4ff;
+  --sombra:       0 8px 32px rgba(0,0,0,0.45);
+  --radio:        14px;
+}
+
+/* ── RESET ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--azul);
+  color: var(--blanco);
+  min-height: 100vh;
+
+  /* Patrón de fondo con puntos dorados */
+  background-image:
+    radial-gradient(circle, rgba(245,197,24,0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ══════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════ */
+#header {
+  background: linear-gradient(135deg, #0a1628 0%, #132042 60%, #1a2d55 100%);
+  border-bottom: 3px solid var(--dorado);
+  padding: 28px 40px 22px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(245,197,24,0.18);
+}
+
+#header h1 {
+  font-family: 'Bangers', cursive;
+  font-size: 3.4rem;
+  letter-spacing: 3px;
+  color: var(--dorado);
+  text-shadow: 3px 3px 0 #b8860b, 0 0 24px rgba(245,197,24,0.5);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+#header p {
+  color: var(--gris);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+/* Estrellitas decorativas */
+#header::before,
+#header::after {
+  content: "⭐";
+  font-size: 1.6rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#header::before { left: 32px; }
+#header::after  { right: 32px; }
+
+/* ══════════════════════════════════════
+   NAV
+   ══════════════════════════════════════ */
+nav {
+  background: var(--azul-medio);
+  border-bottom: 2px solid rgba(245,197,24,0.2);
+  padding: 0 40px;
+  display: flex;
+  gap: 4px;
+}
+
+nav a {
+  color: var(--gris);
+  text-decoration: none;
+  padding: 12px 18px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  display: inline-block;
+}
+
+nav a:hover, nav a.activo {
+  color: var(--dorado);
+  border-bottom-color: var(--dorado);
+}
+
+/* ══════════════════════════════════════
+   MAIN LAYOUT
+   ══════════════════════════════════════ */
+#contenido-principal {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR IZQUIERDO
+   ══════════════════════════════════════ */
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Sección de sobres ── */
+#seccion-sobres {
+  background: var(--azul-card);
+  border: 2px solid var(--dorado);
+  border-radius: var(--radio);
+  padding: 20px;
+  box-shadow: var(--sombra);
+}
+
+#seccion-sobres h2 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.5rem;
+  color: var(--dorado);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  text-align: center;
+  border-bottom: 1px dashed rgba(245,197,24,0.3);
+  padding-bottom: 10px;
+}
+
+/* Tipos de sobres — tarjetitas */
+.sobre-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10,22,40,0.6);
+  border: 1px solid rgba(245,197,24,0.2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.sobre-item:hover {
+  border-color: var(--dorado);
+  transform: translateX(4px);
+}
+
+.sobre-icono { font-size: 2rem; }
+
+.sobre-info .sobre-nombre {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--blanco);
+}
+
+.sobre-info .sobre-cantidad {
+  font-size: 0.8rem;
+  color: var(--gris);
+}
+
+/* ── Botón ¡Pegar Figurita! — Req. TP6 ── */
+/*
+  display: inline-block + padding + background
+  Cambia color y tamaño de fuente en :hover
+*/
+.btn-pegar {
+  display: inline-block;          /* Req. TP6: display inline-block */
+  width: 100%;
+  text-align: center;
+  padding: 14px 20px;
+  background: var(--dorado);
+  color: var(--azul);
+  font-family: 'Bangers', cursive;
+  font-size: 1.3rem;              /* tamaño base */
+  letter-spacing: 2px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, font-size 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(245,197,24,0.3);
+  margin-top: 4px;
+}
+
+/* Req. TP6: :hover cambia color Y tamaño de fuente */
+.btn-pegar:hover {
+  background: #ffe047;
+  font-size: 1.55rem;             /* sube el tamaño en hover */
+  box-shadow: 0 6px 24px rgba(245,197,24,0.55);
+  transform: scale(1.03);
+  color: #3a2000;
+}
+
+/* ── Índice ordenado ── */
+#seccion-indice {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.3);
+  border-radius: var(--radio);
+  padding: 20px;
+  box-shadow: var(--sombra);
+}
+
+#seccion-indice h2 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  color: var(--dorado);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* Req. TP6: Lista ordenada <ol> */
+#indice-figuritas {
+  list-style: none;
+  counter-reset: indice;
+  padding: 0;
+}
+
+#indice-figuritas li {
+  counter-increment: indice;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: var(--gris);
+  transition: background 0.15s, color 0.15s;
+  cursor: default;
+}
+
+#indice-figuritas li:hover {
+  background: rgba(245,197,24,0.08);
+  color: var(--blanco);
+}
+
+#indice-figuritas li::before {
+  content: counter(indice, decimal-leading-zero);
+  font-family: 'Bangers', cursive;
+  font-size: 1rem;
+  color: var(--dorado);
+  min-width: 26px;
+}
+
+/* ══════════════════════════════════════
+   ZONA PRINCIPAL — CUADRÍCULA
+   ══════════════════════════════════════ */
+#zona-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Título de sección ── */
+.seccion-titulo {
+  font-family: 'Bangers', cursive;
+  font-size: 1.8rem;
+  color: var(--dorado);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.seccion-subtitulo {
+  color: var(--gris);
+  font-size: 0.88rem;
+  margin-bottom: 18px;
+}
+
+/* ── Cuadrícula de figuritas — Req. TP6 ── */
+#cuadricula-figuritas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* ── Tarjeta de figurita ── */
+.figurita-card {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.2);
+  border-radius: var(--radio);
+  padding: 18px 16px;
+  transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+
+.figurita-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--dorado);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+
+.figurita-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--dorado);
+  box-shadow: 0 12px 32px rgba(245,197,24,0.20);
+}
+
+.figurita-card:hover::before {
+  opacity: 1;
+}
+
+/* Número de la figurita */
+.figurita-numero {
+  font-family: 'Bangers', cursive;
+  font-size: 0.85rem;
+  color: var(--gris);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+/* Imagen / avatar de la figurita */
+.figurita-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: block;
+  border: 3px solid rgba(245,197,24,0.3);
+  object-fit: cover;
+  background: var(--azul-medio);
+  font-size: 2.8rem;
+  line-height: 80px;
+  text-align: center;
+}
+
+/* Nombre del jugador */
+.figurita-nombre {
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  color: var(--blanco);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* Req. TP6: SPAN para estados/rareza */
+.figurita-estado {
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+/* Estados con <span> — Req. TP6 */
+span.estado-nueva       { color: var(--rojo); }
+span.estado-legendaria  { color: var(--dorado); text-shadow: 0 0 8px rgba(245,197,24,0.6); }
+span.estado-especial    { color: #a78bfa; }
+span.estado-normal      { color: var(--gris); }
+span.estado-rara        { color: var(--verde); }
+
+/* ── Ficha técnica <dl> — Req. TP6 ── */
+.ficha-tecnica {
+  font-size: 0.82rem;
+  margin-bottom: 12px;
+  border-top: 1px dashed rgba(245,197,24,0.2);
+  padding-top: 10px;
+}
+
+.ficha-tecnica dt {
+  color: var(--gris);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+
+.ficha-tecnica dd {
+  color: var(--blanco);
+  font-weight: 700;
+  margin-left: 0;
+  font-size: 0.85rem;
+}
+
+/* ── Lista de habilidades <ul> — Req. TP6 ── */
+.habilidades-lista {
+  /* Req. TP6: lista no ordenada con viñeta CSS personalizada */
+  list-style: none;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.habilidades-lista li {
+  font-size: 0.78rem;
+  color: var(--gris);
+  padding: 3px 0;
+  /* Req. TP6: viñeta personalizada con CSS */
+  padding-left: 18px;
+  position: relative;
+}
+
+/* Viñeta CSS personalizada — estrella dorada */
+.habilidades-lista li::before {
+  content: "⚡";
+  position: absolute;
+  left: 0;
+  font-size: 0.7rem;
+}
+
+/* ── Figurita "pegada" (ya en álbum) vs faltante ── */
+.figurita-card.faltante {
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+
+.figurita-card.faltante:hover {
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── Progreso del álbum ── */
+#progreso-album {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.3);
+  border-radius: var(--radio);
+  padding: 20px 24px;
+}
+
+#progreso-album h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  color: var(--dorado);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.barra-progreso-wrap {
+  background: rgba(10,22,40,0.7);
+  border-radius: 20px;
+  height: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(245,197,24,0.2);
+  margin-bottom: 8px;
+}
+
+.barra-progreso-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #f5c518 0%, #ffe047 100%);
+  transition: width 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--azul);
+}
+
+.progreso-texto {
+  color: var(--gris);
+  font-size: 0.85rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--azul-medio);
+  border-top: 2px solid rgba(245,197,24,0.2);
+  text-align: center;
+  padding: 20px;
+  color: var(--gris);
+  font-size: 0.82rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  #contenido-principal {
+    grid-template-columns: 1fr;
+  }
+  #header h1 { font-size: 2.4rem; }
+  #header::before, #header::after { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════
+   TP7 — Formularios · registro.html
+   ══════════════════════════════════════════════════════ */
+
+/* ── Contenedor principal del formulario ── */
+#pagina-registro {
+  max-width: 760px;
+  margin: 40px auto 60px;
+  padding: 0 24px;
+}
+
+#pagina-registro h2.seccion-titulo {
+  margin-bottom: 6px;
+}
+
+/* ── Tarjeta / bloque del formulario ── */
+.form-card {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.25);
+  border-radius: var(--radio);
+  padding: 32px 36px;
+  box-shadow: var(--sombra);
+  margin-bottom: 28px;
+}
+
+.form-card h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  color: var(--dorado);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(245,197,24,0.25);
+}
+
+/* ── Grupo campo (label + input) ── */
+/* Req. TP7: margin-top prolijo entre controles */
+.form-grupo {
+  margin-top: 18px;
+}
+
+.form-grupo:first-of-type {
+  margin-top: 0;
+}
+
+/* ── Labels — Req. TP7: <label> con for= obligatorio ── */
+.form-grupo label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--gris);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+/* ── Inputs de texto / email / password / number ──
+   Req. TP7: padding interior + estilo coherente ── */
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;          /* Req. TP7: padding en cajas */
+  background: rgba(10,22,40,0.7);
+  border: 1px solid rgba(143,160,184,0.25);
+  border-radius: 8px;
+  color: var(--blanco);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.12);
+}
+
+/* Campo readonly — visualmente distinto */
+.form-input[readonly] {
+  background: rgba(245,197,24,0.06);
+  border-color: rgba(245,197,24,0.2);
+  color: var(--gris);
+  cursor: not-allowed;
+}
+
+/* ── Textarea ── */
+/* Req. TP7: cerrar </textarea> en la misma línea */
+.form-textarea {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;
+  min-height: 110px;
+  resize: vertical;
+  background: rgba(10,22,40,0.7);
+  border: 1px solid rgba(143,160,184,0.25);
+  border-radius: 8px;
+  color: var(--blanco);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.form-textarea:focus {
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.12);
+}
+
+/* ── Select ── */
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(10,22,40,0.7);
+  border: 1px solid rgba(143,160,184,0.25);
+  border-radius: 8px;
+  color: var(--blanco);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238fa0b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.form-select:focus {
+  border-color: var(--dorado);
+}
+
+.form-select option {
+  background: var(--azul-medio);
+  color: var(--blanco);
+}
+
+/* ── Radio y Checkbox ── */
+.opciones-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.opcion-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  color: var(--blanco);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(143,160,184,0.15);
+  background: rgba(10,22,40,0.4);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.opcion-item:hover {
+  border-color: rgba(245,197,24,0.35);
+  background: rgba(245,197,24,0.05);
+}
+
+/* Ocultar el input nativo y reemplazar con CSS */
+.opcion-item input[type="radio"],
+.opcion-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--dorado);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Grid para checkboxes (2 columnas) */
+.opciones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* ── Fila de dos columnas (Nombre + Apellido) ── */
+.form-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+/* ── Nota de campo (texto informativo pequeño) ── */
+.form-nota {
+  font-size: 0.75rem;
+  color: var(--gris);
+  margin-top: 5px;
+  padding-left: 2px;
+}
+
+/* ── Badge readonly ── */
+.badge-readonly {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(245,197,24,0.12);
+  color: var(--dorado);
+  border: 1px solid rgba(245,197,24,0.25);
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* ── Botones del formulario ──
+   Req. TP7: text-transform:uppercase + cursor:pointer ── */
+.form-botones {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+/* Botón SUBMIT — Req. TP7 */
+.btn-submit {
+  display: inline-block;         /* Req. TP6 heredado */
+  padding: 14px 32px;
+  background: var(--dorado);
+  color: var(--azul);
+  font-family: 'Bangers', cursive;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;     /* Req. TP7 */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;               /* Req. TP7 */
+  transition: background 0.2s, font-size 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(245,197,24,0.3);
+}
+
+.btn-submit:hover {
+  background: var(--dorado-claro);
+  font-size: 1.38rem;            /* Req. TP6: hover cambia font-size */
+  box-shadow: 0 6px 24px rgba(245,197,24,0.5);
+  transform: scale(1.03);
+  color: #3a2000;
+}
+
+/* Botón RESET — Req. TP7 */
+.btn-reset {
+  display: inline-block;
+  padding: 14px 24px;
+  background: transparent;
+  color: var(--gris);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;     /* Req. TP7 */
+  border: 1px solid rgba(143,160,184,0.3);
+  border-radius: 10px;
+  cursor: pointer;               /* Req. TP7 */
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-reset:hover {
+  background: rgba(143,160,184,0.1);
+  color: var(--blanco);
+  border-color: rgba(143,160,184,0.55);
+}
+
+/* ── Mensaje de confirmación (oculto por defecto) ── */
+#mensaje-confirmacion {
+  display: none;
+  background: rgba(46,204,113,0.12);
+  border: 1px solid var(--verde);
+  border-radius: 10px;
+  padding: 18px 24px;
+  margin-top: 20px;
+  color: var(--verde);
+  font-weight: 700;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .form-fila        { grid-template-columns: 1fr; }
+  .opciones-grid    { grid-template-columns: 1fr; }
+  .form-card        { padding: 22px 18px; }
+  .form-botones     { flex-direction: column; }
+  .btn-submit,
+  .btn-reset        { width: 100%; text-align: center; }
+}
+
+/* ══════════════════════════════════════════════════════
+   TP8 — Sistema de Fixtures
+   Laboratorio de Programación - 6° G - 2026
+   ══════════════════════════════════════════════════════ */
+
+/* ── <header> semántico (TP8 usa etiqueta header, no #header div) ── */
+header {
+  background: linear-gradient(135deg, #0a1628 0%, #132042 60%, #1a2d55 100%);
+  border-bottom: 3px solid var(--dorado);
+  padding: 28px 40px 22px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(245,197,24,0.18);
+}
+
+header h1 {
+  font-family: 'Bangers', cursive;
+  font-size: 3.4rem;
+  letter-spacing: 3px;
+  color: var(--dorado);
+  text-shadow: 3px 3px 0 #b8860b, 0 0 24px rgba(245,197,24,0.5);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+header p {
+  color: var(--gris);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+header::before,
+header::after {
+  content: "🏆";
+  font-size: 1.6rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+header::before { left: 32px; }
+header::after  { right: 32px; }
+
+/* ── <main> semántico ── */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+}
+
+/* ── Títulos de sección ── */
+.titulo-seccion {
+  font-family: 'Bangers', cursive;
+  font-size: 1.9rem;
+  color: var(--dorado);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.subtitulo-seccion {
+  color: var(--gris);
+  font-size: 0.88rem;
+  margin-bottom: 22px;
+}
+
+/* ── Stats grid / Cards de estadísticas ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.stat-card {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.22);
+  border-radius: var(--radio);
+  padding: 22px 16px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado);
+  box-shadow: 0 8px 28px rgba(245,197,24,0.18);
+}
+
+.stat-numero {
+  font-family: 'Bangers', cursive;
+  font-size: 2.8rem;
+  color: var(--dorado);
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(245,197,24,0.4);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--gris);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── <article> — Novedades / Avisos ── */
+article {
+  background: var(--azul-card);
+  border: 1px solid rgba(245,197,24,0.15);
+  border-left: 4px solid var(--dorado);
+  border-radius: var(--radio);
+  padding: 22px 26px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+  border-color: rgba(245,197,24,0.4);
+  box-shadow: 0 4px 20px rgba(245,197,24,0.1);
+}
+
+.art-meta {
+  font-size: 0.75rem;
+  color: var(--gris);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+article h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+  color: var(--blanco);
+  margin-bottom: 10px;
+}
+
+article p {
+  font-size: 0.9rem;
+  color: var(--gris);
+  line-height: 1.65;
+}
+
+/* ── section dentro de main ── */
+main > section {
+  margin-bottom: 40px;
+}
+
+/* ══════════════════════════════════════
+   TABLA DE FIXTURE
+   ══════════════════════════════════════ */
+.tabla-fixture {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--azul-card);
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  margin-bottom: 8px;
+}
+
+.tabla-fixture thead tr {
+  background: linear-gradient(90deg, #132042 0%, #1a2d55 100%);
+  border-bottom: 2px solid var(--dorado);
+}
+
+.tabla-fixture th {
+  padding: 12px 14px;
+  text-align: left;
+  font-family: 'Bangers', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  color: var(--dorado);
+  text-transform: uppercase;
+}
+
+.tabla-fixture tbody tr {
+  border-bottom: 1px solid rgba(143,160,184,0.1);
+  transition: background 0.2s;
+}
+
+.tabla-fixture tbody tr:hover {
+  background: rgba(245,197,24,0.05);
+}
+
+.tabla-fixture td {
+  padding: 13px 14px;
+  font-size: 0.88rem;
+  color: var(--blanco);
+  vertical-align: middle;
+}
+
+/* Partido en la tabla */
+.td-partido {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.td-vs {
+  background: rgba(245,197,24,0.12);
+  color: var(--dorado);
+  font-family: 'Bangers', cursive;
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(245,197,24,0.25);
+  white-space: nowrap;
+}
+
+/* Badges de fase */
+.badge-fase {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-grupos  { background: rgba(46,204,113,0.15);  color: var(--verde);  border: 1px solid rgba(46,204,113,0.3);  }
+.badge-cuartos { background: rgba(245,197,24,0.12);  color: var(--dorado); border: 1px solid rgba(245,197,24,0.3);  }
+.badge-semi    { background: rgba(167,139,250,0.12); color: #a78bfa;       border: 1px solid rgba(167,139,250,0.3); }
+.badge-final   { background: rgba(231,76,60,0.12);   color: var(--rojo);   border: 1px solid rgba(231,76,60,0.3);   }
+
+/* ══════════════════════════════════════
+   LAYOUT CON ASIDE
+   ══════════════════════════════════════ */
+.layout-con-aside {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── <aside> — Panel lateral ── */
+aside {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.2);
+  border-radius: var(--radio);
+  padding: 22px 20px;
+  box-shadow: var(--sombra);
+  position: sticky;
+  top: 20px;
+}
+
+aside h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--dorado);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(245,197,24,0.25);
+}
+
+/* Tabla de posiciones en aside */
+.tabla-pos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+}
+
+.tabla-pos th {
+  text-align: left;
+  color: var(--gris);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 6px;
+  border-bottom: 1px solid rgba(143,160,184,0.15);
+}
+
+.tabla-pos td {
+  padding: 7px 6px;
+  color: var(--blanco);
+  border-bottom: 1px solid rgba(143,160,184,0.06);
+}
+
+.pos-num {
+  font-family: 'Bangers', cursive;
+  font-size: 1rem;
+  color: var(--dorado);
+  width: 24px;
+}
+
+/* Reglamento en aside */
+.reglamento-lista {
+  list-style: none;
+  padding: 0;
+  font-size: 0.8rem;
+}
+
+.reglamento-lista li {
+  padding: 6px 0 6px 22px;
+  position: relative;
+  color: var(--gris);
+  border-bottom: 1px dashed rgba(143,160,184,0.1);
+  line-height: 1.5;
+}
+
+.reglamento-lista li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--dorado);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+/* ══════════════════════════════════════
+   FORMULARIO DE FIXTURES (alta-fixture.html)
+   ══════════════════════════════════════ */
+.form-fixture {
+  background: var(--azul-card);
+  border: 2px solid rgba(245,197,24,0.22);
+  border-radius: var(--radio);
+  padding: 28px 30px;
+  box-shadow: var(--sombra);
+}
+
+.form-fixture h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  color: var(--dorado);
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(245,197,24,0.22);
+}
+
+/* Fila de dos columnas en fixture */
+.form-fila-fixture {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* Contenedor del form en alta-fixture */
+#form-fixture {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Mensaje de confirmación fixture */
+#msg-fixture {
+  display: none;
+  background: rgba(46,204,113,0.12);
+  border: 1px solid var(--verde);
+  border-radius: 10px;
+  padding: 18px 24px;
+  margin-top: 20px;
+  color: var(--verde);
+  font-weight: 700;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* ── Responsive TP8 ── */
+@media (max-width: 960px) {
+  .layout-con-aside {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .form-fila-fixture {
+    grid-template-columns: 1fr;
+  }
+  header h1 { font-size: 2.4rem; }
+  header::before,
+  header::after { display: none; }
+  main { padding: 24px 16px 40px; }
+  .tabla-fixture { font-size: 0.8rem; }
+  .tabla-fixture th,
+  .tabla-fixture td { padding: 9px 8px; }
+}

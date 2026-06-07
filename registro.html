@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro — Sistema de Fixtures · TP8</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+  <h1>Sistema de Fixtures</h1>
+  <p>Laboratorio de Programación &middot; 6° G &middot; 2026</p>
+</header>
+
+<nav>
+  <a href="index-tp8.html">🏠 Panel de Control</a>
+  <a href="alta-fixture.html">➕ Cargar Partido</a>
+  <a href="ver-fixture.html">📅 Ver Fixture</a>
+  <a href="registro.html" class="activo">📝 Registro</a>
+  <a href="index.html">⭐ Álbum</a>
+</nav>
+
+<main>
+  <section>
+    <h2 class="titulo-seccion">📝 Registro de Participante</h2>
+    <p class="subtitulo-seccion">Completá el formulario para unirte al sistema y registrar tus datos en el torneo.</p>
+
+    <form id="form-registro" method="GET" action="#" autocomplete="off" novalidate>
+
+      <!-- SECCIÓN 1: Datos Personales -->
+      <div class="form-card">
+        <h3>👤 Datos Personales</h3>
+
+        <div class="form-fila">
+          <div class="form-grupo">
+            <label for="nombre">Nombre</label>
+            <input class="form-input" type="text" id="nombre" name="nombre"
+              placeholder="Ej: Lionel" required autocomplete="off">
+          </div>
+          <div class="form-grupo">
+            <label for="apellido">Apellido</label>
+            <input class="form-input" type="text" id="apellido" name="apellido"
+              placeholder="Ej: Messi" required autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-grupo">
+          <label for="email">Correo Electrónico</label>
+          <input class="form-input" type="email" id="email" name="email"
+            placeholder="ejemplo@correo.com" required autocomplete="off">
+          <p class="form-nota">⚠ El navegador verificará que sea un correo válido antes de enviar.</p>
+        </div>
+
+        <div class="form-grupo">
+          <label for="contrasena">Contraseña</label>
+          <input class="form-input" type="password" id="contrasena" name="contrasena"
+            placeholder="Mínimo 8 caracteres" required autocomplete="new-password">
+        </div>
+
+        <div class="form-grupo">
+          <label for="edad">Edad del Participante</label>
+          <input class="form-input" type="number" id="edad" name="edad"
+            placeholder="Tu edad" min="6" max="99" required style="max-width:160px;">
+          <p class="form-nota">📌 Solo se aceptan edades entre 6 y 99 años.</p>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: Participación en el Torneo -->
+      <div class="form-card">
+        <h3>🏆 Participación en el Torneo</h3>
+
+        <div class="form-grupo">
+          <label>Rol en el Torneo</label>
+          <p class="form-nota" style="margin-bottom:10px;">Seleccioná una opción. Todos comparten <code>name="rol"</code> para que sean excluyentes (type="radio").</p>
+          <div class="opciones-grupo">
+            <label class="opcion-item" for="rol-jugador">
+              <input type="radio" id="rol-jugador" name="rol" value="jugador" checked>
+              ⚽ Jugador — Participo activamente en el torneo
+            </label>
+            <label class="opcion-item" for="rol-capitan">
+              <input type="radio" id="rol-capitan" name="rol" value="capitan">
+              🎖️ Capitán — Soy el representante de mi equipo
+            </label>
+            <label class="opcion-item" for="rol-tecnico">
+              <input type="radio" id="rol-tecnico" name="rol" value="tecnico">
+              📋 Técnico/DT — Dirijo un equipo participante
+            </label>
+            <label class="opcion-item" for="rol-veedor">
+              <input type="radio" id="rol-veedor" name="rol" value="veedor">
+              👁️ Veedor — Observo y registro resultados
+            </label>
+          </div>
+        </div>
+
+        <div class="form-grupo">
+          <label>Disponibilidad de Horarios</label>
+          <p class="form-nota" style="margin-bottom:10px;">Podés seleccionar una o varias opciones a la vez (type="checkbox").</p>
+          <div class="opciones-grid">
+            <label class="opcion-item" for="horario-manana">
+              <input type="checkbox" id="horario-manana"  name="horarios" value="manana" checked>
+              🌅 Mañana (8–12 hs)
+            </label>
+            <label class="opcion-item" for="horario-mediodia">
+              <input type="checkbox" id="horario-mediodia" name="horarios" value="mediodia">
+              ☀️ Mediodía (12–14 hs)
+            </label>
+            <label class="opcion-item" for="horario-tarde">
+              <input type="checkbox" id="horario-tarde"   name="horarios" value="tarde" checked>
+              🌤️ Tarde (14–18 hs)
+            </label>
+            <label class="opcion-item" for="horario-noche">
+              <input type="checkbox" id="horario-noche"   name="horarios" value="noche">
+              🌙 Noche (18–21 hs)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-grupo">
+          <label for="equipo-registro">Equipo al que Pertenecés</label>
+          <select class="form-select" id="equipo-registro" name="equipo_registro" required>
+            <option value="" disabled selected>— Seleccioná tu equipo —</option>
+            <option value="algoritmos">Los Algoritmos</option>
+            <option value="binary">Binary Stars</option>
+            <option value="stack">Stack Overflow FC</option>
+            <option value="debug">Debug United</option>
+            <option value="runtime">Runtime Errors</option>
+            <option value="syntax">Syntax FC</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: Datos del Sistema -->
+      <div class="form-card">
+        <h3>🔒 Datos del Sistema</h3>
+
+        <div class="form-grupo">
+          <label for="id-sesion">
+            ID de Participante
+            <span class="badge-readonly">SOLO LECTURA</span>
+          </label>
+          <input class="form-input" type="text" id="id-sesion" name="id_sesion"
+            value="100" readonly>
+          <p class="form-nota">🔐 Este código es asignado automáticamente por el sistema y no puede modificarse.</p>
+        </div>
+
+        <!-- Campo hidden — metadato del sistema -->
+        <input type="hidden" id="sistema" name="sistema" value="SistemaFixtures-v1">
+        <p class="form-nota" style="margin-top:12px;">
+          ℹ El sistema también envía internamente el identificador
+          <strong style="color:var(--dorado);">SistemaFixtures-v1</strong>
+          como metadato oculto (type="hidden").
+        </p>
+      </div>
+
+      <!-- SECCIÓN 4: Perfil -->
+      <div class="form-card">
+        <h3>✏️ Perfil del Participante</h3>
+
+        <div class="form-grupo">
+          <label for="perfil-texto">Presentación / Datos adicionales</label>
+          <textarea class="form-textarea" id="perfil-texto" name="perfil"
+            placeholder="Contanos un poco sobre vos: ¿desde cuándo jugás? ¿cuál es tu posición? ¿en qué torneos anteriores participaste?"
+            rows="5"></textarea>
+          <p class="form-nota">Máximo recomendado: 300 caracteres.</p>
+        </div>
+
+        <div class="form-botones">
+          <input class="btn-submit" type="submit" value="ENVIAR REGISTRO">
+          <input class="btn-reset"  type="reset"  value="RESTABLECER CAMPOS">
+        </div>
+
+        <div id="mensaje-confirmacion" style="display:none;"></div>
+      </div>
+
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>TP8 &middot; Sistema de Fixtures &middot; Laboratorio de Programación 6° G &middot; 2026</p>
+</footer>
+
+<script>
+  const form    = document.getElementById('form-registro');
+  const mensaje = document.getElementById('mensaje-confirmacion');
+
+  /* Estilos inline del mensaje para garantizar visibilidad */
+  mensaje.style.background    = 'rgba(46,204,113,0.12)';
+  mensaje.style.border        = '1px solid #2ecc71';
+  mensaje.style.borderRadius  = '10px';
+  mensaje.style.padding       = '18px 24px';
+  mensaje.style.marginTop     = '20px';
+  mensaje.style.color         = '#2ecc71';
+  mensaje.style.fontWeight    = '700';
+  mensaje.style.textAlign     = 'center';
+  mensaje.style.fontSize      = '1rem';
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre     = document.getElementById('nombre').value.trim();
+    const apellido   = document.getElementById('apellido').value.trim();
+    const email      = document.getElementById('email').value.trim();
+    const contrasena = document.getElementById('contrasena').value;
+    const edad       = parseInt(document.getElementById('edad').value);
+    const equipo     = document.getElementById('equipo-registro').value;
+
+    if (!nombre || !apellido) { alert('⚠ Por favor completá tu Nombre y Apellido.'); return; }
+    if (!email || !email.includes('@')) { alert('⚠ El correo electrónico no es válido.'); return; }
+    if (!contrasena || contrasena.length < 8) { alert('⚠ La contraseña debe tener al menos 8 caracteres.'); return; }
+    if (isNaN(edad) || edad < 6 || edad > 99) { alert('⚠ La edad debe estar entre 6 y 99 años.'); return; }
+    if (!equipo) { alert('⚠ Seleccioná el equipo al que pertenecés.'); return; }
+
+    const equipoNombres = {
+      algoritmos:'Los Algoritmos', binary:'Binary Stars',
+      stack:'Stack Overflow FC',   debug:'Debug United',
+      runtime:'Runtime Errors',    syntax:'Syntax FC'
+    };
+
+    mensaje.style.display = 'block';
+    mensaje.innerHTML =
+      '✅ ¡Registro exitoso!<br>' +
+      'Bienvenido, <strong>' + nombre + ' ' + apellido + '</strong>.<br>' +
+      'Equipo: <strong>' + equipoNombres[equipo] + '</strong> &middot; ID: 100';
+
+    mensaje.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  form.addEventListener('reset', function() {
+    mensaje.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>

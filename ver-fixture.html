@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ver Fixture — Sistema de Fixtures · TP8</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+  <h1>Sistema de Fixtures</h1>
+  <p>Laboratorio de Programación &middot; 6° G &middot; 2026</p>
+</header>
+
+<nav>
+  <a href="index-tp8.html">🏠 Panel de Control</a>
+  <a href="alta-fixture.html">➕ Cargar Partido</a>
+  <a href="ver-fixture.html" class="activo">📅 Ver Fixture</a>
+  <a href="registro.html">📝 Registro</a>
+  <a href="index.html">⭐ Álbum</a>
+</nav>
+
+<main>
+  <h2 class="titulo-seccion">📅 Fixture del Torneo 2026</h2>
+  <p class="subtitulo-seccion">Liga de Programación 6° G &middot; Calendario completo de encuentros</p>
+
+  <div class="layout-con-aside">
+
+    <!-- ══ ZONA PRINCIPAL ══ -->
+    <div>
+
+      <!-- Fase de Grupos -->
+      <section>
+        <h3 class="titulo-seccion" style="font-size:1.4rem;margin-bottom:14px;">🟢 Fase de Grupos</h3>
+        <table class="tabla-fixture">
+          <thead><tr><th>#</th><th>Partido</th><th>Fecha</th><th>Hora</th><th>Sede</th><th>Resultado</th><th>Fase</th></tr></thead>
+          <tbody id="tbody-grupos">
+            <tr><td>01</td><td><div class="td-partido">Los Algoritmos <span class="td-vs">vs</span> Binary Stars</div></td><td>15/05/2026</td><td>14:00 hs</td><td>Estadio Principal</td><td style="color:var(--verde);font-weight:700;">3 — 1 ✅</td><td><span class="badge-fase badge-grupos">Grupos</span></td></tr>
+            <tr><td>02</td><td><div class="td-partido">Stack Overflow FC <span class="td-vs">vs</span> Debug United</div></td><td>15/05/2026</td><td>15:30 hs</td><td>Cancha 2</td><td style="color:var(--verde);font-weight:700;">2 — 2 ✅</td><td><span class="badge-fase badge-grupos">Grupos</span></td></tr>
+            <tr><td>03</td><td><div class="td-partido">Runtime Errors <span class="td-vs">vs</span> Syntax FC</div></td><td>16/05/2026</td><td>14:00 hs</td><td>Patio Norte</td><td style="color:var(--verde);font-weight:700;">1 — 4 ✅</td><td><span class="badge-fase badge-grupos">Grupos</span></td></tr>
+            <tr><td>04</td><td><div class="td-partido">Binary Stars <span class="td-vs">vs</span> Debug United</div></td><td>20/05/2026</td><td>14:00 hs</td><td>Estadio Principal</td><td style="color:var(--verde);font-weight:700;">3 — 0 ✅</td><td><span class="badge-fase badge-grupos">Grupos</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Cuartos de Final -->
+      <section style="margin-top:28px;">
+        <h3 class="titulo-seccion" style="font-size:1.4rem;margin-bottom:14px;">⚡ Cuartos de Final</h3>
+        <table class="tabla-fixture">
+          <thead><tr><th>#</th><th>Partido</th><th>Fecha</th><th>Hora</th><th>Sede</th><th>Resultado</th><th>Fase</th></tr></thead>
+          <tbody id="tbody-cuartos">
+            <tr><td>05</td><td><div class="td-partido">Los Algoritmos <span class="td-vs">vs</span> Runtime Errors</div></td><td>27/05/2026</td><td>14:00 hs</td><td>Estadio Principal</td><td style="color:var(--verde);font-weight:700;">2 — 0 ✅</td><td><span class="badge-fase badge-cuartos">Cuartos</span></td></tr>
+            <tr><td>06</td><td><div class="td-partido">Binary Stars <span class="td-vs">vs</span> Syntax FC</div></td><td>27/05/2026</td><td>15:30 hs</td><td>Cancha 2</td><td style="color:var(--verde);font-weight:700;">1 — 0 ✅</td><td><span class="badge-fase badge-cuartos">Cuartos</span></td></tr>
+            <tr><td>07</td><td><div class="td-partido">Stack Overflow FC <span class="td-vs">vs</span> Debug United</div></td><td>28/05/2026</td><td>14:00 hs</td><td>Estadio Principal</td><td style="color:var(--verde);font-weight:700;">3 — 2 ✅</td><td><span class="badge-fase badge-cuartos">Cuartos</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Semifinales -->
+      <section style="margin-top:28px;">
+        <h3 class="titulo-seccion" style="font-size:1.4rem;margin-bottom:14px;">🌟 Semifinales</h3>
+        <table class="tabla-fixture">
+          <thead><tr><th>#</th><th>Partido</th><th>Fecha</th><th>Hora</th><th>Sede</th><th>Estado</th><th>Fase</th></tr></thead>
+          <tbody id="tbody-semifinal">
+            <tr><td>08</td><td><div class="td-partido">Los Algoritmos <span class="td-vs">vs</span> Binary Stars</div></td><td>10/06/2026</td><td>14:30 hs</td><td>Estadio Principal</td><td style="color:var(--dorado);font-weight:700;">🕐 Pendiente</td><td><span class="badge-fase badge-semi">Semifinal</span></td></tr>
+            <tr><td>09</td><td><div class="td-partido">Stack Overflow FC <span class="td-vs">vs</span> Debug United</div></td><td>11/06/2026</td><td>14:30 hs</td><td>Estadio Principal</td><td style="color:var(--dorado);font-weight:700;">🕐 Pendiente</td><td><span class="badge-fase badge-semi">Semifinal</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Final -->
+      <section style="margin-top:28px;">
+        <h3 class="titulo-seccion" style="font-size:1.4rem;margin-bottom:14px;">🏆 Final</h3>
+        <table class="tabla-fixture">
+          <thead><tr><th>#</th><th>Partido</th><th>Fecha</th><th>Hora</th><th>Sede</th><th>Estado</th><th>Fase</th></tr></thead>
+          <tbody id="tbody-final">
+            <tr><td>10</td><td><div class="td-partido"><span style="color:var(--gris);">Por definir</span><span class="td-vs">vs</span><span style="color:var(--gris);">Por definir</span></div></td><td>18/06/2026</td><td>15:00 hs</td><td>Estadio Principal</td><td style="color:var(--gris);">🔒 A confirmar</td><td><span class="badge-fase badge-final">Final</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Partidos cargados por el usuario -->
+      <section id="seccion-usuario" style="margin-top:28px; display:none;">
+        <h3 class="titulo-seccion" style="font-size:1.4rem;margin-bottom:14px;">📋 Partidos Cargados por el Sistema</h3>
+        <table class="tabla-fixture">
+          <thead><tr><th>#</th><th>Partido</th><th>Fecha</th><th>Hora</th><th>Sede</th><th>Árbitro</th><th>Estado</th><th>Fase</th><th></th></tr></thead>
+          <tbody id="tbody-usuario"></tbody>
+        </table>
+      </section>
+
+    </div>
+
+    <!-- ══ ASIDE ══ -->
+    <aside>
+      <h3>📊 Tabla de Posiciones</h3>
+      <table class="tabla-pos">
+        <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PTS</th></tr></thead>
+        <tbody>
+          <tr><td class="pos-num">1</td><td>Los Algoritmos</td><td>4</td><td style="color:var(--dorado);font-weight:700;">10</td></tr>
+          <tr><td class="pos-num">2</td><td>Binary Stars</td><td>4</td><td style="color:var(--dorado);font-weight:700;">9</td></tr>
+          <tr><td class="pos-num">3</td><td>Stack Overflow FC</td><td>4</td><td>7</td></tr>
+          <tr><td class="pos-num">4</td><td>Debug United</td><td>4</td><td>6</td></tr>
+          <tr><td class="pos-num">5</td><td>Syntax FC</td><td>3</td><td>4</td></tr>
+          <tr><td class="pos-num">6</td><td>Runtime Errors</td><td>3</td><td>1</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:22px;">📋 Reglamento</h3>
+      <ul class="reglamento-lista">
+        <li>Partidos de 2 tiempos de 20 minutos cada uno.</li>
+        <li>Victoria: 3 puntos. Empate: 1 punto. Derrota: 0 puntos.</li>
+        <li>En eliminación directa, penales en caso de empate.</li>
+        <li>Los capitanes deben presentarse 15 min antes.</li>
+        <li>Mínimo 5 jugadores por equipo para iniciar.</li>
+        <li>Suspensiones por lluvia se reprograman en 48 hs.</li>
+        <li>Protesta de resultados: 24 hs después del partido.</li>
+      </ul>
+
+      <h3 style="margin-top:22px;">📢 Avisos</h3>
+      <ul class="reglamento-lista">
+        <li>La final se transmitirá en vivo por el canal del establecimiento.</li>
+        <li>Inscripciones para el torneo 2027 abren en agosto.</li>
+        <li>Consultas al coordinador en el aula 304.</li>
+      </ul>
+
+      <!-- Resumen de cargados -->
+      <div id="resumen-cargados" style="display:none; margin-top:20px; padding:14px; background:rgba(245,197,24,0.08); border:1px solid rgba(245,197,24,0.25); border-radius:10px;">
+        <p style="font-family:'Bangers',cursive;font-size:1rem;letter-spacing:2px;color:var(--dorado);margin-bottom:6px;">CARGADOS POR EL SISTEMA</p>
+        <p id="txt-resumen" style="font-size:0.82rem;color:var(--gris);"></p>
+      </div>
+
+      <a href="alta-fixture.html" style="text-decoration:none;display:block;margin-top:20px;">
+        <div style="text-align:center;padding:14px;background:var(--dorado);color:var(--azul);font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;border-radius:10px;cursor:pointer;text-transform:uppercase;transition:background 0.2s;"
+          onmouseover="this.style.background='#ffe047'" onmouseout="this.style.background='var(--dorado)'">
+          ➕ Cargar Partido
+        </div>
+      </a>
+    </aside>
+
+  </div>
+</main>
+
+<footer>
+  <p>TP8 &middot; Sistema de Fixtures &middot; Laboratorio de Programación 6° G &middot; 2026</p>
+</footer>
+
+<script>
+  const NOMBRES = {
+    algoritmos:'Los Algoritmos', binary:'Binary Stars',
+    stack:'Stack Overflow FC',   debug:'Debug United',
+    runtime:'Runtime Errors',    syntax:'Syntax FC'
+  };
+  const FASES = {
+    grupos:'Fase de Grupos', cuartos:'Cuartos de Final',
+    semifinal:'Semifinal',   final:'Final'
+  };
+  const BADGE = {
+    grupos:'badge-grupos', cuartos:'badge-cuartos',
+    semifinal:'badge-semi', final:'badge-final'
+  };
+  const LABEL = {
+    grupos:'Grupos', cuartos:'Cuartos',
+    semifinal:'Semifinal', final:'Final'
+  };
+
+  function eliminarPartido(id) {
+    if (!confirm('¿Eliminar este partido del fixture?')) return;
+    const guardados = JSON.parse(localStorage.getItem('fixtures_tp8') || '[]');
+    const nuevos = guardados.filter(p => p.id !== id);
+    localStorage.setItem('fixtures_tp8', JSON.stringify(nuevos));
+    cargarDesdeStorage();
+  }
+
+  function cargarDesdeStorage() {
+    const guardados = JSON.parse(localStorage.getItem('fixtures_tp8') || '[]');
+    const tbody     = document.getElementById('tbody-usuario');
+    const seccion   = document.getElementById('seccion-usuario');
+    const resumen   = document.getElementById('resumen-cargados');
+    const txtRes    = document.getElementById('txt-resumen');
+
+    tbody.innerHTML = '';
+
+    if (guardados.length === 0) {
+      seccion.style.display = 'none';
+      resumen.style.display = 'none';
+      return;
+    }
+
+    seccion.style.display = 'block';
+    resumen.style.display = 'block';
+    txtRes.textContent    = guardados.length + ' partido' + (guardados.length !== 1 ? 's' : '') + ' registrado' + (guardados.length !== 1 ? 's' : '') + ' en el sistema.';
+
+    /* Numerar continuando desde los predefinidos (10 fijos) */
+    guardados.forEach(function(p, i) {
+      const num = String(i + 11).padStart(2, '0');
+      const tr  = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + num + '</td>' +
+        '<td><div class="td-partido">' + NOMBRES[p.local] + ' <span class="td-vs">vs</span> ' + NOMBRES[p.visitante] + '</div></td>' +
+        '<td>' + p.fecha + '</td>' +
+        '<td>' + p.hora + '</td>' +
+        '<td>' + p.sede + '</td>' +
+        '<td style="color:var(--gris);font-size:0.8rem;">' + p.arbitro + '</td>' +
+        '<td style="color:var(--dorado);font-weight:700;">' + p.resultado + '</td>' +
+        '<td><span class="badge-fase ' + BADGE[p.instancia] + '">' + LABEL[p.instancia] + '</span></td>' +
+        '<td><button onclick="eliminarPartido(' + p.id + ')" style="background:rgba(231,76,60,0.15);color:var(--rojo);border:1px solid rgba(231,76,60,0.3);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.75rem;font-weight:700;">✕ Quitar</button></td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* Cargar al abrir la página */
+  cargarDesdeStorage();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargar Partido — Sistema de Fixtures · TP8</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+  <h1>Sistema de Fixtures</h1>
+  <p>Laboratorio de Programación &middot; 6° G &middot; 2026</p>
+</header>
+
+<nav>
+  <a href="index-tp8.html">🏠 Panel de Control</a>
+  <a href="alta-fixture.html" class="activo">➕ Cargar Partido</a>
+  <a href="ver-fixture.html">📅 Ver Fixture</a>
+  <a href="registro.html">📝 Registro</a>
+  <a href="index.html">⭐ Álbum</a>
+</nav>
+
+<main>
+  <section>
+    <h2 class="titulo-seccion">➕ Cargar Nuevo Partido</h2>
+    <p class="subtitulo-seccion">Completá todos los campos para registrar un nuevo encuentro en el fixture del torneo.</p>
+
+    <form id="form-fixture" method="GET" action="#" autocomplete="off" novalidate>
+
+      <!-- BLOQUE 1: Equipos -->
+      <div class="form-fixture">
+        <h3>⚔️ Equipos Participantes</h3>
+        <div class="form-fila-fixture">
+          <div class="form-grupo">
+            <label for="equipo-local">Equipo Local</label>
+            <select class="form-select" id="equipo-local" name="equipo_local" required>
+              <option value="" disabled selected>— Seleccioná el local —</option>
+              <option value="algoritmos">Los Algoritmos</option>
+              <option value="binary">Binary Stars</option>
+              <option value="stack">Stack Overflow FC</option>
+              <option value="debug">Debug United</option>
+              <option value="runtime">Runtime Errors</option>
+              <option value="syntax">Syntax FC</option>
+            </select>
+          </div>
+          <div class="form-grupo">
+            <label for="equipo-visitante">Equipo Visitante</label>
+            <select class="form-select" id="equipo-visitante" name="equipo_visitante" required>
+              <option value="" disabled selected>— Seleccioná el visitante —</option>
+              <option value="algoritmos">Los Algoritmos</option>
+              <option value="binary">Binary Stars</option>
+              <option value="stack">Stack Overflow FC</option>
+              <option value="debug">Debug United</option>
+              <option value="runtime">Runtime Errors</option>
+              <option value="syntax">Syntax FC</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: Fecha, Hora y Sede -->
+      <div class="form-fixture" style="margin-top:20px;">
+        <h3>📅 Programación del Encuentro</h3>
+        <div class="form-fila-fixture">
+          <div class="form-grupo">
+            <label for="fecha-partido">Fecha del Partido</label>
+            <input class="form-input" type="date" id="fecha-partido" name="fecha_partido" required>
+          </div>
+          <div class="form-grupo">
+            <label for="hora-partido">Hora de Inicio</label>
+            <input class="form-input" type="time" id="hora-partido" name="hora_partido" required>
+          </div>
+        </div>
+        <div class="form-grupo" style="margin-top:18px;">
+          <label for="sede">Sede / Cancha Asignada</label>
+          <input class="form-input" type="text" id="sede" name="sede"
+            placeholder="Ej: Estadio Principal, Cancha 2, Patio Norte…" required autocomplete="off">
+        </div>
+        <div class="form-grupo">
+          <label for="arbitro">Árbitro Designado</label>
+          <input class="form-input" type="text" id="arbitro" name="arbitro"
+            placeholder="Nombre del árbitro o veedores" autocomplete="off">
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: Instancia -->
+      <div class="form-fixture" style="margin-top:20px;">
+        <h3>🏆 Instancia del Torneo</h3>
+        <p class="form-nota" style="margin-bottom:14px;">
+          Seleccioná la fase del torneo. Los botones comparten <code>name="instancia"</code> para ser excluyentes (type="radio").
+        </p>
+        <div class="opciones-grupo">
+          <label class="opcion-item" for="fase-grupos">
+            <input type="radio" id="fase-grupos"  name="instancia" value="grupos" checked>
+            🟢 Fase de Grupos — Partidos de la ronda clasificatoria
+          </label>
+          <label class="opcion-item" for="fase-cuartos">
+            <input type="radio" id="fase-cuartos" name="instancia" value="cuartos">
+            ⚡ Cuartos de Final — Eliminación directa desde 8 equipos
+          </label>
+          <label class="opcion-item" for="fase-semi">
+            <input type="radio" id="fase-semi"    name="instancia" value="semifinal">
+            🌟 Semifinal — Los cuatro mejores equipos
+          </label>
+          <label class="opcion-item" for="fase-final">
+            <input type="radio" id="fase-final"   name="instancia" value="final">
+            🏆 Final — Gran definición del campeonato
+          </label>
+        </div>
+
+        <div class="form-grupo" style="margin-top:18px;">
+          <label for="observaciones">Observaciones</label>
+          <textarea class="form-textarea" id="observaciones" name="observaciones"
+            placeholder="Condiciones especiales, cambio de sede, suspensiones previas, etc."
+            rows="3"></textarea>
+        </div>
+
+        <input type="hidden" name="sistema" value="SistemaFixtures-v1">
+
+        <div class="form-botones">
+          <input class="btn-submit" type="submit" value="REGISTRAR ENCUENTRO">
+          <input class="btn-reset"  type="reset"  value="RESTABLECER FORMULARIO">
+        </div>
+
+        <div id="msg-fixture"></div>
+      </div>
+
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>TP8 &middot; Sistema de Fixtures &middot; Laboratorio de Programación 6° G &middot; 2026</p>
+</footer>
+
+<script>
+  const NOMBRES = {
+    algoritmos:'Los Algoritmos', binary:'Binary Stars',
+    stack:'Stack Overflow FC',   debug:'Debug United',
+    runtime:'Runtime Errors',    syntax:'Syntax FC'
+  };
+
+  const FASES = {
+    grupos:'Fase de Grupos', cuartos:'Cuartos de Final',
+    semifinal:'Semifinal',   final:'Final'
+  };
+
+  const form = document.getElementById('form-fixture');
+  const msg  = document.getElementById('msg-fixture');
+
+  /* ── Estilos inline del mensaje para que funcione sin depender de display:none en CSS ── */
+  msg.style.display = 'none';
+  msg.style.background = 'rgba(46,204,113,0.12)';
+  msg.style.border = '1px solid #2ecc71';
+  msg.style.borderRadius = '10px';
+  msg.style.padding = '18px 24px';
+  msg.style.marginTop = '20px';
+  msg.style.color = '#2ecc71';
+  msg.style.fontWeight = '700';
+  msg.style.textAlign = 'center';
+  msg.style.fontSize = '1rem';
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const local     = document.getElementById('equipo-local').value;
+    const visitante = document.getElementById('equipo-visitante').value;
+    const fecha     = document.getElementById('fecha-partido').value;
+    const hora      = document.getElementById('hora-partido').value;
+    const sede      = document.getElementById('sede').value.trim();
+    const arbitro   = document.getElementById('arbitro').value.trim();
+    const obs       = document.getElementById('observaciones').value.trim();
+    const instancia = document.querySelector('input[name="instancia"]:checked').value;
+
+    /* Validaciones */
+    if (!local || !visitante) { alert('⚠ Seleccioná ambos equipos.'); return; }
+    if (local === visitante)  { alert('⚠ El local y el visitante no pueden ser el mismo equipo.'); return; }
+    if (!fecha)               { alert('⚠ Ingresá la fecha del partido.'); return; }
+    if (!hora)                { alert('⚠ Ingresá el horario del partido.'); return; }
+    if (!sede)                { alert('⚠ Ingresá la sede o cancha asignada.'); return; }
+
+    /* Formatear fecha DD/MM/AAAA */
+    const [anio, mes, dia] = fecha.split('-');
+    const fechaFmt = dia + '/' + mes + '/' + anio;
+
+    /* Crear objeto partido */
+    const partido = {
+      id:        Date.now(),
+      local,
+      visitante,
+      fecha:     fechaFmt,
+      hora:      hora + ' hs',
+      sede,
+      arbitro:   arbitro || '—',
+      instancia,
+      resultado: '🕐 Pendiente',
+      estado:    'pendiente'
+    };
+
+    /* Guardar en localStorage */
+    const guardados = JSON.parse(localStorage.getItem('fixtures_tp8') || '[]');
+    guardados.push(partido);
+    localStorage.setItem('fixtures_tp8', JSON.stringify(guardados));
+
+    /* Mostrar confirmación */
+    msg.style.display = 'block';
+    msg.innerHTML =
+      '✅ Partido registrado correctamente:<br>' +
+      '<strong>' + NOMBRES[local] + ' vs ' + NOMBRES[visitante] + '</strong>' +
+      ' &middot; ' + fechaFmt + ' &middot; ' + hora + ' hs' +
+      ' &middot; ' + sede +
+      ' &middot; ' + FASES[instancia];
+
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  form.addEventListener('reset', function() {
+    msg.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
